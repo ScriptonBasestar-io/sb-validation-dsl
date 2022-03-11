@@ -3,6 +3,7 @@ pluginManagement {
 //        kotlin("jvm") version "1.6.10"
         kotlin("kapt") version "1.6.10"
         kotlin("multiplatform") version "1.6.10"
+        kotlin("plugin.serialization") version "1.6.10"
         id("org.jetbrains.kotlin.multiplatform") version "1.6.10"
         id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
         id("org.jlleitschuh.gradle.ktlint-idea") version "10.2.1"
@@ -26,4 +27,3 @@ pluginManagement {
 }
 
 rootProject.name = "sb-validation-dsl"
-

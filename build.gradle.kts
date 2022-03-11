@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("multiplatform")
     kotlin("kapt")
+    kotlin("plugin.serialization") version "1.6.10"
     id("org.jlleitschuh.gradle.ktlint")
     id("org.jlleitschuh.gradle.ktlint-idea")
     id("com.adarshr.test-logger")
@@ -38,18 +39,23 @@ kotlin {
         }
     }
     sourceSets {
-        commonMain {}
-        commonTest {
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:${extra["kotlin_version"]}")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:${extra["kotlin_version"]}")
+                implementation("org.jetbrains.kotlin:kotlin-reflect:${extra["kotlin_version"]}")
+                implementation("org.jetbrains.kotlin:kotlin-serialization:${extra["kotlin_version"]}")
+                implementation("org.jetbrains.kotlin:kotlin-native-utils:${extra["kotlin_version"]}")
+//                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${extra["coroutine_version"]}")
+            }
+        }
+        val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val jvmMain by getting {
-//            dependsOn(jvm)
-//            dependencies {
-//            }
-        }
+        val jvmMain by getting {}
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -62,6 +68,14 @@ kotlin {
                 implementation(kotlin("test-js"))
             }
         }
+//        named("linuxX64Main") {
+//            dependencies {
+//                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${extra["CoroutineVersion"]}")
+//                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${extra["CoroutineVersion"]}")
+//                implementation("design.animus.kotlin.mp.functional.datatypes:multiplatform-functional-datatypes-linuxx64:${extra["MPDataTypes"]}")
+//                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${extra["SerializationVersion"]}")
+//            }
+//        }
     }
 }
 
@@ -75,7 +89,7 @@ tasks.withType<KotlinCompile> {
 tasks.register("stubSources", Jar::class) {
     classifier = "sources"
 }
-tasks.register("stubJavadoc", Jar::class){
+tasks.register("stubJavadoc", Jar::class) {
     classifier = "javadoc"
 }
 
@@ -91,7 +105,7 @@ jacoco {
     toolVersion = project.extra["jacoco_version"] as String
 }
 
-//tasks {
+// tasks {
 //    val sourcesJar by creating(Jar::class) {
 //        archiveClassifier.set("sources")
 //        println(kotlin.sourceSets.commonMain)
@@ -109,7 +123,7 @@ jacoco {
 //        archives(javadocJar)
 //        archives(jar)
 //    }
-//}
+// }
 
 tasks.register<Jar>("dokkaJar") {
     archiveClassifier.set("javadoc")
@@ -129,12 +143,12 @@ afterEvaluate {
             }
         }
 //        publications.all {
-////            if (name == "kotlinMultiplatform") {
-////                artifact(stubJavadoc)
-////            } else {
-////                artifact(stubJavadoc)
-////            }
-////            logger.info("Artifact id = ${it.artifactId}")
+// //            if (name == "kotlinMultiplatform") {
+// //                artifact(stubJavadoc)
+// //            } else {
+// //                artifact(stubJavadoc)
+// //            }
+// //            logger.info("Artifact id = ${it.artifactId}")
 //            pom {
 //                name = rootProject.name
 //                description = "description"
@@ -161,10 +175,10 @@ afterEvaluate {
     }
 }
 
-//signing {
+// signing {
 //    setRequired({
 //        (project.extra["isReleaseVersion"] as Boolean) && gradle.taskGraph.hasTask("publish")
 //    })
 //    useGpgCmd()
 //    sign(publishing.publications["main"])
-//}
+// }
