@@ -9,7 +9,6 @@ fun <T> ValidationBuilderBase<T>.const(expected: T) =
         "must be {0}".format(expected?.let { "'$it'" } ?: "null"),
     ) { expected == it }
 
-
 inline fun <reified T> ValidationBuilderBase<T>.uniqueItems(unique: Boolean): Constraint<T> = addConstraint(
     "all items must be unique"
 ) {

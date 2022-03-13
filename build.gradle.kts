@@ -59,7 +59,7 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(kotlin("test-junit"))
+//                implementation(kotlin("test-junit"))
             }
         }
         val jsMain by getting {}

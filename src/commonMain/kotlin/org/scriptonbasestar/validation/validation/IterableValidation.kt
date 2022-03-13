@@ -3,7 +3,6 @@ package org.scriptonbasestar.validation.validation
 import org.scriptonbasestar.validation.Validation
 import org.scriptonbasestar.validation.result.Valid
 import org.scriptonbasestar.validation.result.ValidationResult
-import kotlin.reflect.KProperty1
 
 internal class IterableValidation<T>(
     private val validation: Validation<T>

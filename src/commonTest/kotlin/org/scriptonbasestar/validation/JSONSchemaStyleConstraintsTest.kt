@@ -1,8 +1,8 @@
 package org.scriptonbasestar.validation
 
-import io.konform.validation.JSONSchemaStyleConstraintsTest.TCPPacket.*
-import io.konform.validation.constraint.*
-import org.scriptonbasestar.validation.countFieldsWithErrors
+import org.scriptonbasestar.validation.constraint.*
+import org.scriptonbasestar.validation.result.Valid
+import org.scriptonbasestar.validation.result.ValidationResult
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -60,10 +60,10 @@ class JSONSchemaStyleConstraintsTest {
 
     @Test
     fun kotlinEnumConstraint() {
-        val partialEnumValidation = Validation<TCPPacket> { enum(SYN, ACK) }
-        assertEquals(Valid(SYN), partialEnumValidation(SYN))
-        assertEquals(Valid(ACK), partialEnumValidation(ACK))
-        assertEquals(1, countFieldsWithErrors(partialEnumValidation(SYNACK)))
+        val partialEnumValidation = Validation<TCPPacket> { enum(TCPPacket.SYN, TCPPacket.ACK) }
+        assertEquals(Valid(TCPPacket.SYN), partialEnumValidation(TCPPacket.SYN))
+        assertEquals(Valid(TCPPacket.ACK), partialEnumValidation(TCPPacket.ACK))
+        assertEquals(1, countFieldsWithErrors(partialEnumValidation(TCPPacket.SYNACK)))
 
         val stringifiedEnumValidation = Validation<String> { enum<TCPPacket>() }
         assertEquals(Valid("SYN"), stringifiedEnumValidation("SYN"))
@@ -71,7 +71,7 @@ class JSONSchemaStyleConstraintsTest {
         assertEquals(Valid("SYNACK"), stringifiedEnumValidation("SYNACK"))
         assertEquals(1, countFieldsWithErrors(stringifiedEnumValidation("ASDF")))
 
-        assertEquals("must be one of: 'SYN', 'ACK'", partialEnumValidation(SYNACK).get()!![0])
+        assertEquals("must be one of: 'SYN', 'ACK'", partialEnumValidation(TCPPacket.SYNACK).get()!![0])
         assertEquals("must be one of: 'SYN', 'ACK', 'SYNACK'", stringifiedEnumValidation("").get()!![0])
     }
 

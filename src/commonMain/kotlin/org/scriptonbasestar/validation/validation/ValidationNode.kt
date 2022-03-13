@@ -19,7 +19,7 @@ internal class ValidationNode<T>(
     private fun localValidation(value: T): ValidationResult<T> {
         return constraints
             .filter { !it.test(value) }
-            .map { constructHint(value, it) }
+            .map { it.hint }
             .let { errors ->
                 if (errors.isEmpty()) {
                     Valid(value)
@@ -27,11 +27,6 @@ internal class ValidationNode<T>(
                     Invalid(mapOf("" to errors))
                 }
             }
-    }
-
-    private fun constructHint(value: T, it: Constraint<T>): String {
-        // TODO string formatting
-        return it.hint
     }
 
     private fun applySubValidations(propertyValue: T, keyTransform: (String) -> String): ValidationResult<T> {

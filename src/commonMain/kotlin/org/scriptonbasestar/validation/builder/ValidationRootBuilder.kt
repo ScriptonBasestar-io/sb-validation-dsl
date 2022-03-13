@@ -73,8 +73,6 @@ class ValidationRootBuilder<T> : ValidationBuilderBase<T>() {
     override val <R> KProperty1<T, R>.has: ValidationBuilderBase<R>
         get() = getOrCreateBuilder(PropModifier.NonNull)
 
-
     override fun Constraint<T>.hint(hint: String): Constraint<T> =
         Constraint(hint, this.test).also { constraints.remove(this); constraints.add(it) }
-
 }

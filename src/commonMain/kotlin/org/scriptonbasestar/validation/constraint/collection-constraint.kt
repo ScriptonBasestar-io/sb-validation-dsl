@@ -3,8 +3,6 @@ package org.scriptonbasestar.validation.constraint
 import org.scriptonbasestar.validation.Constraint
 import org.scriptonbasestar.validation.builder.ValidationBuilderBase
 import org.scriptonbasestar.validation.util.format
-import kotlin.math.max
-
 
 inline fun <reified T> ValidationBuilderBase<T>.minItems(minSize: Int): Constraint<T> = addConstraint(
     "must have at least {0} items".format(minSize.toString()),
@@ -27,7 +25,6 @@ inline fun <reified T> ValidationBuilderBase<T>.maxItems(maxSize: Int): Constrai
         else -> throw IllegalStateException("maxItems can not be applied to type ${T::class}")
     }
 }
-
 
 inline fun <reified T : Map<*, *>> ValidationBuilderBase<T>.minProperties(minSize: Int): Constraint<T> =
     minItems(minSize) hint "must have at least {0} properties".format(minSize.toString())
