@@ -7,7 +7,7 @@ import org.scriptonbasestar.validation.validation.OptionalPropertyValidation
 import org.scriptonbasestar.validation.validation.RequiredPropertyValidation
 import kotlin.reflect.KProperty1
 
-private data class SingleValuePropKey<T, R>(
+data class SingleValuePropKey<T, R>(
     val property: KProperty1<T, R>,
     val modifier: PropModifier
 ) : PropKey<T>() {

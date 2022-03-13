@@ -8,7 +8,7 @@ import org.scriptonbasestar.validation.validation.OptionalPropertyValidation
 import org.scriptonbasestar.validation.validation.RequiredPropertyValidation
 import kotlin.reflect.KProperty1
 
-private data class IterablePropKey<T, R>(
+data class IterablePropKey<T, R>(
     val property: KProperty1<T, Iterable<R>>,
     val modifier: PropModifier
 ) : PropKey<T>() {

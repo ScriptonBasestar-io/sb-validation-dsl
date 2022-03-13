@@ -8,7 +8,7 @@ import org.scriptonbasestar.validation.validation.OptionalPropertyValidation
 import org.scriptonbasestar.validation.validation.RequiredPropertyValidation
 import kotlin.reflect.KProperty1
 
-private data class MapPropKey<T, K, V>(
+data class MapPropKey<T, K, V>(
     val property: KProperty1<T, Map<K, V>>,
     val modifier: PropModifier
 ) : PropKey<T>() {

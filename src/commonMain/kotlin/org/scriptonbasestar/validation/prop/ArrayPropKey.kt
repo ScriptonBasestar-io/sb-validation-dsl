@@ -8,7 +8,7 @@ import org.scriptonbasestar.validation.validation.OptionalPropertyValidation
 import org.scriptonbasestar.validation.validation.RequiredPropertyValidation
 import kotlin.reflect.KProperty1
 
-private data class ArrayPropKey<T, R>(
+data class ArrayPropKey<T, R>(
     val property: KProperty1<T, Array<R>>,
     val modifier: PropModifier
 ) : PropKey<T>() {
