@@ -16,6 +16,12 @@ inline fun <reified T : Enum<T>> ValidationBuilderBase<String>.enum(): Constrain
     ) { it in enumNames }
 }
 
+fun ValidationBuilderBase<String>.notBlank(): Constraint<String> {
+    return addConstraint(
+        "must not null or empty",
+    ) { it != null && it.length > 1 }
+}
+
 fun ValidationBuilderBase<String>.minLength(length: Int): Constraint<String> {
     require(length >= 0) { IllegalArgumentException("minLength requires the length to be >= 0") }
     return addConstraint(
