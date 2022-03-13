@@ -79,7 +79,7 @@ class ReadmeExampleTest {
             // validations for the individual entries
             Event::ticketPrices {
                 hasKey("regular")
-                hasKeyEqualsValue("aa", "bb")
+//                hasKeyEqualsValue("aa", "bb")
             }
         }
 
