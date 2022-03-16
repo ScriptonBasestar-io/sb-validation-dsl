@@ -27,3 +27,6 @@ pluginManagement {
 }
 
 rootProject.name = "sb-validation-dsl"
+
+include(":definitions")
+include(":mapping")
