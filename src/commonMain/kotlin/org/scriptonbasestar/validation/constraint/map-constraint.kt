@@ -9,7 +9,7 @@ inline fun <reified T> ValidationBuilderBase<*>.type() =
         "must be of the correct type"
     ) { it is T }
 
-inline fun <reified K, V> ValidationBuilderBase<Map<K, V>>.hasKey(key: K): Constraint<Map<K, V>> = addConstraint(
+inline fun <reified K, V> ValidationBuilderBase<out Map<K, V>>.hasKey(key: K): Constraint<out Map<K, V>> = addConstraint(
     "must hasKeys {0}".format(key.toString()),
 ) {
     when (it) {
@@ -18,10 +18,10 @@ inline fun <reified K, V> ValidationBuilderBase<Map<K, V>>.hasKey(key: K): Const
     }
 }
 
-inline fun <reified K, reified V> ValidationBuilderBase<Map<K, V>>.hasKeyValue(
+inline fun <reified K, reified V> ValidationBuilderBase<out Map<K, V>>.hasKeyValue(
     key: K,
     value: V,
-): Constraint<Map<K, V>> =
+): Constraint<out Map<K, V>> =
     addConstraint(
         "must hasKey {0} and value equals with {1}".format(key.toString(), value.toString()),
     ) {
@@ -31,22 +31,26 @@ inline fun <reified K, reified V> ValidationBuilderBase<Map<K, V>>.hasKeyValue(
         }
     }
 
-inline fun <reified K> ValidationBuilderBase<Map<K, String>>.hasKeyValue(
+inline fun <reified K> ValidationBuilderBase<out Map<K, String>>.hasKeyValue(
     key: K,
     regex: Regex,
-): Constraint<Map<K, String>> =
+): Constraint<out Map<K, String>> =
     addConstraint(
-        "must hasKey {0} and value equals with {1}".format(key.toString(), regex.toString()),
+        "must hasKey {0} and value matches with {1}".format(key.toString(), regex.toString()),
     ) {
+        println("========================")
+        println(key)
+        println(it[key])
+        println(regex.matches(it[key]!!))
         when (it) {
-            is Map<K, String> -> it[key] != null && it[key]!!.matches(regex)
+            is Map<K, String> -> it[key] != null && regex.matches(it[key]!!)
             else -> throw IllegalStateException("hasKeyEqualsValue can not be applied to type ${K::class}")
         }
     }
 
-inline fun <reified K> ValidationBuilderBase<Map<K, String>>.hasKeyValueNotBlank(
+inline fun <reified K> ValidationBuilderBase<out Map<K, String>>.hasKeyValueNotBlank(
     key: K,
-): Constraint<Map<K, String>> =
+): Constraint<out Map<K, String>> =
     addConstraint(
         "must hasKey {0} and value not blank".format(key.toString()),
     ) {
