@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("multiplatform")
     kotlin("kapt")
-    kotlin("plugin.serialization") version "1.6.10"
+    kotlin("plugin.serialization")
     id("org.jlleitschuh.gradle.ktlint")
     id("org.jlleitschuh.gradle.ktlint-idea")
     id("com.adarshr.test-logger")
