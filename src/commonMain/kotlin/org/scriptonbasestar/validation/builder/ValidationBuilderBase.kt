@@ -60,5 +60,5 @@ abstract class ValidationBuilderBase<T> {
     abstract infix fun <R> KProperty1<T, R?>.required(init: ValidationBuilderBase<R>.() -> Unit)
     abstract fun run(validation: Validation<T>)
     abstract val <R> KProperty1<T, R>.has: ValidationBuilderBase<R>
-    abstract infix fun Constraint<T>.hint(hint: String): Constraint<T>
+//    abstract infix fun Constraint<T>.hint(hint: String): Constraint<T>
 }

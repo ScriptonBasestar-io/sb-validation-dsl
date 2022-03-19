@@ -1,6 +1,5 @@
 package org.scriptonbasestar.validation.builder
 
-import org.scriptonbasestar.validation.Constraint
 import org.scriptonbasestar.validation.Validation
 import org.scriptonbasestar.validation.prop.*
 import kotlin.reflect.KProperty1
@@ -72,7 +71,4 @@ class ValidationRootBuilder<T> : ValidationBuilderBase<T>() {
 
     override val <R> KProperty1<T, R>.has: ValidationBuilderBase<R>
         get() = getOrCreateBuilder(PropModifier.NonNull)
-
-    override fun Constraint<T>.hint(hint: String): Constraint<T> =
-        Constraint(hint, this.test).also { constraints.remove(this); constraints.add(it) }
 }
