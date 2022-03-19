@@ -56,6 +56,7 @@ abstract class ValidationBuilderBase<T> {
 
 //    abstract infix fun <R> R?.ifKeyPresent(init: ValidationBuilderBase<R>.() -> Unit)
 
+    abstract infix fun <R> KProperty1<T, R>.isPresent(init: ValidationBuilderBase<R>.() -> Unit)
     abstract infix fun <R> KProperty1<T, R?>.ifPresent(init: ValidationBuilderBase<R>.() -> Unit)
     abstract infix fun <R> KProperty1<T, R?>.required(init: ValidationBuilderBase<R>.() -> Unit)
     abstract fun run(validation: Validation<T>)

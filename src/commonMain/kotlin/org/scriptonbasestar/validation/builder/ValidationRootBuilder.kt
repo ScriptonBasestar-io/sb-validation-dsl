@@ -57,6 +57,10 @@ class ValidationRootBuilder<T> : ValidationBuilderBase<T>() {
 //        return OptionalPropertyValidation(property, validations)
 //    }
 
+    override fun <R> KProperty1<T, R>.isPresent(init: ValidationBuilderBase<R>.() -> Unit) {
+        getOrCreateBuilder(PropModifier.NonNull).also(init)
+    }
+
     override fun <R> KProperty1<T, R?>.ifPresent(init: ValidationBuilderBase<R>.() -> Unit) {
         getOrCreateBuilder(PropModifier.Optional).also(init)
     }
