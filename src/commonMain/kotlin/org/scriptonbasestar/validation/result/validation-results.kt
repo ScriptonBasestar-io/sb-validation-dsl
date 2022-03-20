@@ -3,16 +3,16 @@ package org.scriptonbasestar.validation.result
 import kotlin.reflect.KProperty1
 
 sealed class ValidationResult<T> {
-    abstract operator fun get(vararg propertyPath: Any): List<String>?
+    abstract operator fun get(vararg propertyPath: Any): List<ValidationError>?
     abstract fun <R> map(transform: (T) -> R): ValidationResult<R>
-    abstract val errors: ValidationErrors
+    abstract val errors: Map<String, List<ValidationError>>
 }
 
 data class Invalid<T>(
-    internal val internalErrors: Map<String, List<String>>
+    internal val internalErrors: Map<String, List<ValidationError>>
 ) : ValidationResult<T>() {
 
-    override fun get(vararg propertyPath: Any): List<String>? =
+    override fun get(vararg propertyPath: Any): List<ValidationError>? =
         internalErrors[propertyPath.joinToString("", transform = ::toPathSegment)]
 
     override fun <R> map(transform: (T) -> R): ValidationResult<R> = Invalid(this.internalErrors)
@@ -25,13 +25,12 @@ data class Invalid<T>(
         }
     }
 
-    override val errors: ValidationErrors by lazy {
-        DefaultValidationErrors(
-            internalErrors.map { (path, errors) ->
-                val errors2: List<ValidationError> = errors.map { PropertyValidationError(path, it) }
-                path to errors2
-            }.toMap()
-        )
+    override val errors: Map<String, List<ValidationError>> by lazy {
+        internalErrors.map { (path, errors) ->
+            // FIXME path랑  it.path 다른가?
+            val errors2: List<ValidationError> = errors.map { ValidationError(path, it.message, it.throwable) }
+            path to errors2
+        }.toMap()
     }
 
     override fun toString(): String {
@@ -40,8 +39,8 @@ data class Invalid<T>(
 }
 
 data class Valid<T>(val value: T) : ValidationResult<T>() {
-    override fun get(vararg propertyPath: Any): List<String>? = null
+    override fun get(vararg propertyPath: Any): List<ValidationError>? = null
     override fun <R> map(transform: (T) -> R): ValidationResult<R> = Valid(transform(this.value))
-    override val errors: ValidationErrors
-        get() = DefaultValidationErrors(emptyMap())
+    override val errors: Map<String, List<ValidationError>>
+        get() = emptyMap()
 }

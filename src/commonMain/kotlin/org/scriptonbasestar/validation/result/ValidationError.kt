@@ -1,6 +1,11 @@
 package org.scriptonbasestar.validation.result
 
-interface ValidationError {
-    val dataPath: String
-    val message: String
+data class ValidationError(
+    val dataPath: String,
+    val message: String,
+    val throwable: Throwable?,
+) {
+    override fun toString(): String {
+        return "ValidationError(dataPath=$dataPath, message=$message)"
+    }
 }

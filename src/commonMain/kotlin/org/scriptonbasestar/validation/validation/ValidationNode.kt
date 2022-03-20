@@ -4,6 +4,7 @@ import org.scriptonbasestar.validation.Constraint
 import org.scriptonbasestar.validation.Validation
 import org.scriptonbasestar.validation.result.Invalid
 import org.scriptonbasestar.validation.result.Valid
+import org.scriptonbasestar.validation.result.ValidationError
 import org.scriptonbasestar.validation.result.ValidationResult
 
 internal class ValidationNode<T>(
@@ -24,7 +25,7 @@ internal class ValidationNode<T>(
                 if (errors.isEmpty()) {
                     Valid(value)
                 } else {
-                    Invalid(mapOf("" to errors))
+                    Invalid(mapOf("" to errors.map { ValidationError("", it, null) }))
                 }
             }
     }
