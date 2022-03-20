@@ -35,6 +35,10 @@ fun ValidationBuilderBase<String>.maxLength(length: Int, hint: String? = null): 
     ) { it.length <= length }
 }
 
+fun ValidationBuilderBase<String>.startsWith(value: String, ignoreCase: Boolean = true, hint: String? = null) = addConstraint(
+    hint ?: "must match the expected pattern",
+) { it.startsWith(value, ignoreCase = ignoreCase) }
+
 fun ValidationBuilderBase<String>.pattern(pattern: String, hint: String? = null) = pattern(pattern.toRegex(), hint)
 
 fun ValidationBuilderBase<String>.pattern(pattern: Regex, hint: String? = null) = addConstraint(
